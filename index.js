@@ -124,7 +124,7 @@ async.series([
                 if (backup.datasetObjects) {
                     mkdirp.sync(username + '/datasets');
 
-                    async.each(datasets, function (datasetObject, eachCallback) {
+                    async.eachLimit(datasets, 1, function (datasetObject, eachCallback) {
                         mapbox.listAllFeatures(datasetObject.id, {}, (err, collection) => {
                             if (err) {
                                 process.stdout.write(chalk.red('x'));
