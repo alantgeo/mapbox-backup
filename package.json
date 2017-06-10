@@ -1,0 +1,19 @@
+{
+  "name": "mapbox-backup",
+  "version": "1.0.0",
+  "description": "A unofficial command line utility to backup your Mapbox account",
+  "main": "index.js",
+  "bin": "./index.js",
+  "author": {
+      "name": "Andrew Harvey",
+      "email": "andrew@alantgeo.com.au"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.4.1",
+    "chalk": "^1.1.3",
+    "mapbox": "^1.0.0-beta7",
+    "mkdirp": "^0.5.1",
+    "yargs": "^8.0.1"
+  }
+}
