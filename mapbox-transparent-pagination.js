@@ -70,16 +70,19 @@ var MapboxTransparentPagination = function (client) {
 
     client.listAllFeatures = function (dataset, options, callback) {
         var errors = [];
-        var results = {
-            type: "FeatureCollection",
-            features: []
-        };
+        var results;
 
         var handleResponse = function (err, result, res) {
             if (err) {
                 errors.push(err);
             }
-            results.features.push(...result);
+
+            if (!results) {
+                results = result;
+            } else {
+                results.features.push(...result.features);
+            }
+
             if (res.nextPage) {
                 res.nextPage(handleResponse);
             } else {
