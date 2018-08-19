@@ -7,33 +7,47 @@ const async = require('async');
 const chalk = require('chalk');
 const error = chalk.bold.red;
 
-const argv = require('yargs').argv
+const argv = require('yargs').argv;
+
+const availableBackupScopes = [
+    'styles-list',
+    'style-documents',
+    'tilesets-list',
+    'datasets-list',
+    'dataset-documents',
+    'tokens-list'
+];
+
+if (argv.h || argv.help) {
+    console.log("Usage: mapbox-backup [--access-token=\"sk.xxx\"] [--output path/to/output] [backup scopes...]");
+    console.log("    Available backup scopes: (if none are provided all scopes are backed up)")
+    availableBackupScopes.forEach((backupScope) => {
+        console.log('        --' + backupScope);
+    });
+    process.exit();
+}
 
 // pretty print JSON outputs to make it easier to diff changes when committing backups into version control
 const json_spacing = 2;
 
-const backup = {};
+const backupScopes = {};
 
-if (argv.all) {
-    [
-        'styleList',
-        'styleObjects',
-        'tilesetList',
-        'datasetList',
-        'datasetObjects',
-        'tokenList'
-    ].forEach(function (backupOption) {
-        backup[backupOption]  = true;
-    });
-} else {
-    for (const arg in argv) {
-        backup[arg] = argv[arg];
+for (const arg in argv) {
+    if (availableBackupScopes.includes(arg)) {
+        backupScopes[arg] = argv[arg];
     }
 }
 
+// if no backup scopes were provided on the command line, default to backing up all
+if (Object.keys(backupScopes).length === 0) {
+    availableBackupScopes.forEach(function (backupScope) {
+        backupScopes[backupScope]  = true;
+    });
+}
+
 // can't get objects without the list
-if (backup.styleObjects) backup.styleList = true;
-if (backup.datasetObjects) backup.datasetList = true;
+if (backupScopes['style-documents']) backupScopes['styles-list'] = true;
+if (backupScopes['dataset-documents']) backupScopes['datasets-list'] = true;
 
 const accessToken = argv['access-token'] || process.env.MapboxAccessToken;
 
@@ -64,13 +78,13 @@ mkdirp.sync(outputPath);
 
 async.series([
     function(callback) {
-        if (backup.styleList) {
+        if (backupScopes['styles-list']) {
             mapbox.listAllStyles((err, styles) => {
                 process.stdout.write('Styles List ');
                 if (err) {
                     process.stdout.write(chalk.red('✖') + '\n');
                     console.error(err);
-                    if (backup.styleObjects) {
+                    if (backupScopes['style-documents']) {
                         process.stdout.write('Style Documents ' + chalk.yellow(' skipped') + '\n');
                     }
                     callback(err);
@@ -78,7 +92,7 @@ async.series([
                 fs.writeFileSync(path.join(outputPath, 'styles.json'), JSON.stringify(styles, null, json_spacing));
                 process.stdout.write(chalk.green('✔') + '\n');
 
-                if (backup.styleObjects) {
+                if (backupScopes['style-documents']) {
                     process.stdout.write('Style Documents ');
                     mkdirp.sync(path.join(outputPath, 'styles'));
 
@@ -114,7 +128,7 @@ async.series([
         }
     },
     function(callback) {
-        if (backup.tilesetList) {
+        if (backupScopes['tilesets-list']) {
             mapbox.listAllTilesets((err, tilesets) => {
                 process.stdout.write('Tilesets List ');
                 if (err) {
@@ -131,13 +145,13 @@ async.series([
         }
     },
     function(callback) {
-        if (backup.datasetList) {
+        if (backupScopes['datasets-list']) {
             mapbox.listAllDatasets((err, datasets) => {
                 process.stdout.write('Datasets List ');
                 if (err) {
                     process.stdout.write(chalk.red('✖') + '\n');
                     console.error(err);
-                    if (backup.datasetObjects) {
+                    if (backupScopes['dataset-documents']) {
                         process.stdout.write('Dataset Documents ' + chalk.yellow(' skipped') + '\n');
                     }
                     callback(err);
@@ -145,7 +159,7 @@ async.series([
                 fs.writeFileSync(path.join(outputPath, 'datasets.json'), JSON.stringify(datasets, null, json_spacing));
                 process.stdout.write(chalk.green('✔') + '\n');
 
-                if (backup.datasetObjects) {
+                if (backupScopes['dataset-documents']) {
                     process.stdout.write('Dataset Documents ');
                     mkdirp.sync(path.join(outputPath, 'datasets'));
 
@@ -181,7 +195,7 @@ async.series([
         }
     },
     function(callback) {
-        if (backup.tokenList) {
+        if (backupScopes['tokens-list']) {
             mapbox.listAllTokens((err, tokens) => {
                 process.stdout.write('Tokens ');
                 if (err) {
