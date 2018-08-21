@@ -30,6 +30,8 @@ if (argv.h || argv.help) {
 // pretty print JSON outputs to make it easier to diff changes when committing backups into version control
 const json_spacing = 2;
 
+const jobs = 4;
+
 const backupScopes = {};
 
 for (const arg in argv) {
@@ -96,7 +98,7 @@ async.series([
                     process.stdout.write('Style Documents ');
                     mkdirp.sync(path.join(outputPath, 'styles'));
 
-                    async.each(styles, function (styleObject, eachCallback) {
+                    async.eachLimit(styles, jobs, function (styleObject, eachCallback) {
                         mapbox.readStyle(styleObject.id, (err, styleDoc) => {
                             if (err) {
                                 process.stdout.write(chalk.red('✖'));
@@ -163,7 +165,7 @@ async.series([
                     process.stdout.write('Dataset Documents ');
                     mkdirp.sync(path.join(outputPath, 'datasets'));
 
-                    async.eachLimit(datasets, 1, function (datasetObject, eachCallback) {
+                    async.eachLimit(datasets, jobs, function (datasetObject, eachCallback) {
                         mapbox.listAllFeatures(datasetObject.id, {}, (err, collection) => {
                             if (err) {
                                 process.stdout.write(chalk.red('✖'));
