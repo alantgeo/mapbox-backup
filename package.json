@@ -5,8 +5,8 @@
   "main": "index.js",
   "bin": "./index.js",
   "author": {
-      "name": "Andrew Harvey",
-      "email": "andrew@alantgeo.com.au"
+    "name": "Andrew Harvey",
+    "email": "andrew@alantgeo.com.au"
   },
   "license": "ISC",
   "dependencies": {
