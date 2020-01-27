@@ -1,6 +1,6 @@
 {
   "name": "mapbox-backup",
-  "version": "3.0.0",
+  "version": "3.0.0-beta1",
   "description": "A unofficial command line utility to backup your Mapbox account",
   "main": "index.js",
   "bin": "./index.js",
