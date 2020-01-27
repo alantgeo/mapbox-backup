@@ -1,6 +1,6 @@
 # mapbox-backup
 
-A unofficial command line utility to backup your Mapbox account
+A unofficial command line utility to backup and restore your Mapbox account.
 
 ## Usage
 
@@ -11,6 +11,7 @@ This will backup everything possible (see below) or to only backup a subset of y
 
 * `--styles-list` Style metadata
 * `--style-documents` Styles
+* `--style-sprites` Style sprites (json and png only, not source SVGs)
 * `--tilesets-list` Tileset metadata
 * `--datasets-list` Datasets metadata
 * `--dataset-documents` Datasets
