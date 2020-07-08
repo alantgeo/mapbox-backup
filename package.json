@@ -10,7 +10,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@mapbox/mapbox-sdk": "alantgeo/mapbox-sdk-js#alantgeo-master",
+    "@mapbox/mapbox-sdk": "mapbox/mapbox-sdk-js#liststyles-fresh",
     "async": "^3.2.0",
     "bottleneck": "^2.19.5",
     "chalk": "^4.1.0",
