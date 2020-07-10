@@ -10,7 +10,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@mapbox/mapbox-sdk": "mapbox/mapbox-sdk-js#liststyles-fresh",
+    "@mapbox/mapbox-sdk": "mapbox/mapbox-sdk-js#bec8e9485035f781703d69565082352bf311e7ac",
     "async": "^3.2.0",
     "bottleneck": "^2.19.5",
     "chalk": "^4.1.0",

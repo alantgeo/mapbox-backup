@@ -18,22 +18,9 @@
     is-plain-obj "^1.1.0"
     xtend "^4.0.1"
 
-"@mapbox/mapbox-sdk@alantgeo/mapbox-sdk-js#alantgeo-master":
-  version "0.9.0"
-  resolved "https://codeload.github.com/alantgeo/mapbox-sdk-js/tar.gz/cde35137625cdb56ebd1f88c11add2d0bec9a182"
-  dependencies:
-    "@mapbox/fusspot" "^0.4.0"
-    "@mapbox/parse-mapbox-token" "^0.2.0"
-    "@mapbox/polyline" "^1.0.0"
-    eventemitter3 "^3.1.0"
-    form-data "^3.0.0"
-    got "^8.3.2"
-    is-plain-obj "^1.1.0"
-    xtend "^4.0.1"
-
-"@mapbox/mapbox-sdk@mapbox/mapbox-sdk-js#liststyles-fresh":
+"@mapbox/mapbox-sdk@mapbox/mapbox-sdk-js#bec8e9485035f781703d69565082352bf311e7ac":
   version "0.11.0"
-  resolved "https://codeload.github.com/mapbox/mapbox-sdk-js/tar.gz/e23e08dec3bae4f6d2a3167615826a2e17960842"
+  resolved "https://codeload.github.com/mapbox/mapbox-sdk-js/tar.gz/bec8e9485035f781703d69565082352bf311e7ac"
   dependencies:
     "@mapbox/fusspot" "^0.4.0"
     "@mapbox/parse-mapbox-token" "^0.2.0"
